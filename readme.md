@@ -7,7 +7,7 @@ Access your iTunes library (iOS only)
 First you need to install react-native-device-info:
 
 ```javascript
-npm install react-native-device-info --save
+npm install react-native-itunes --save
 ```
 
 ### Installation
