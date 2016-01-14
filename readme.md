@@ -4,13 +4,11 @@ Access your iTunes library (iOS only)
 
 ## Installation
 
-First you need to install react-native-device-info:
+In the command line, first you need to install react-native-itunes:
 
 ```javascript
 npm install react-native-itunes --save
 ```
-
-### Installation
 
 In XCode, in the project navigator, right click Libraries ➜ Add Files to [your project's name] Go to node_modules ➜ react-native-itunes and add the .xcodeproj file
 
@@ -27,6 +25,8 @@ iTunes.getTracks().then((tracks) => {
 });
 
 ```
+
+Note: it works on the device (it even shows on the cloud Apple Music saved songs)
 
 ## API
 
