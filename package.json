@@ -1,0 +1,18 @@
+{
+  "name": "react-native-itunes",
+  "version": "0.1.0",
+  "description": "Get iTunes info",
+  "main": "itunes.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kadiks/react-native-itunes"
+  },
+  "keywords": [
+    "react-component",
+    "react-native",
+    "ios",
+    "itunes"
+  ],
+  "author": "Jénaïc Cambré <me@jenaiccambre.com> (https://github.com/kadiks)",
+  "license": "MIT"
+}
