@@ -18,9 +18,33 @@ Run your project (Cmd+R)
 
 ## Example
 
+### Get all tracks
 ```js
 var iTunes = require('react-native-itunes');
 iTunes.getTracks().then((tracks) => {
+  console.log(tracks);
+});
+
+```
+### Get all tracks and extract only genre and title
+```js
+var iTunes = require('react-native-itunes');
+iTunes.getTracks({
+  fields: ['title', 'genre']
+}).then((tracks) => {
+  console.log(tracks);
+});
+
+```
+### Filter track by title and album artist
+```js
+var iTunes = require('react-native-itunes');
+iTunes.getTracks({
+  query: {
+    title: 'digital',
+    albumArtist: 'daft'
+  }
+}).then((tracks) => {
   console.log(tracks);
 });
 
@@ -30,9 +54,19 @@ Note: it works on the device (it even shows on the cloud Apple Music saved songs
 
 ## API
 
-### getTracks()
+### getTracks({ fields, query })
 
-## Track item
+Returns [TrackItem]
+
+- fields: Array https://developer.apple.com/library/ios/documentation/MediaPlayer/Reference/MPMediaItem_ClassReference/
+- query: Object
+  - title
+  - albumArtist
+  - albumTitle
+  - artist
+  - genre
+
+## TrackItem
 
 - albumArtist
 - albumTitle
@@ -40,7 +74,6 @@ Note: it works on the device (it even shows on the cloud Apple Music saved songs
 - genre
 - playCount
 - title
-
 
 ## Links
 
@@ -50,7 +83,11 @@ Note: it works on the device (it even shows on the cloud Apple Music saved songs
 
 ## Roadmap
 
+
+- [ ] Add tests
+- [ ] Play from searched items
+
 ### getTracks(params)
 
-- [ ] Object [params.query={}]
-- [ ] Object [params.fields={}]
+- [x] Object [params.query={}]
+- [x] Object [params.fields={}]

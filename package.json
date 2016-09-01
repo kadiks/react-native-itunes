@@ -5,7 +5,7 @@
   "main": "itunes.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kadiks/react-native-itunes"
+    "url": "git+https://github.com/kadiks/react-native-itunes.git"
   },
   "keywords": [
     "react-component",
@@ -13,6 +13,10 @@
     "ios",
     "itunes"
   ],
-  "author": "Jénaïc Cambré <me@jenaiccambre.com> (https://github.com/kadiks)",
-  "license": "MIT"
+  "author": "Jénaïc Cambré <me@jenaiccambre.com> (http://www.jenaiccambre.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kadiks/react-native-itunes/issues"
+  },
+  "homepage": "https://github.com/kadiks/react-native-itunes#readme"
 }
