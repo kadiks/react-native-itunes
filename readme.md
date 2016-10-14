@@ -6,9 +6,27 @@ Access your iTunes library (iOS only)
 
 In the command line, first you need to install react-native-itunes:
 
-```javascript
+```shell
 npm install react-native-itunes --save
 ```
+
+## Automatically link
+
+#### With React Native 0.27+
+
+```shell
+react-native link react-native-device-info
+```
+
+#### With older versions of React Native
+
+You need [`rnpm`](https://github.com/rnpm/rnpm) (`npm install -g rnpm`)
+
+```shell
+rnpm link react-native-device-info
+```
+
+## Manually link
 
 In XCode, in the project navigator, right click Libraries ➜ Add Files to [your project's name] Go to node_modules ➜ react-native-itunes and add the .xcodeproj file
 
@@ -20,7 +38,8 @@ Run your project (Cmd+R)
 
 ### Get all tracks
 ```js
-var iTunes = require('react-native-itunes');
+import iTunes from 'react-native-itunes';
+
 iTunes.getTracks().then((tracks) => {
   console.log(tracks);
 });
@@ -28,7 +47,8 @@ iTunes.getTracks().then((tracks) => {
 ```
 ### Get all tracks and extract only genre and title
 ```js
-var iTunes = require('react-native-itunes');
+import iTunes from 'react-native-itunes';
+
 iTunes.getTracks({
   fields: ['title', 'genre']
 }).then((tracks) => {
@@ -38,7 +58,8 @@ iTunes.getTracks({
 ```
 ### Filter track by title and album artist
 ```js
-var iTunes = require('react-native-itunes');
+import iTunes from 'react-native-itunes';
+
 iTunes.getTracks({
   query: {
     title: 'digital',
