@@ -130,7 +130,7 @@ Returns [TrackItem]
 - Play track from TrackItem.title & TrackItem.albumTitle
 - Play/Pause
 
-### 0.2.0 (internal)
+### 0.2.0
 
 - Query tracks
 - Filter tracks
