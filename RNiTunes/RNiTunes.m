@@ -22,6 +22,7 @@
 RCT_EXPORT_MODULE()
 
 
+
 RCT_EXPORT_METHOD(getTracks:(NSDictionary *)params successCallback:(RCTResponseSenderBlock)successCallback) {
     
     NSLog(@"%@ %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
@@ -29,11 +30,10 @@ RCT_EXPORT_METHOD(getTracks:(NSDictionary *)params successCallback:(RCTResponseS
     NSArray *fields = [RCTConvert NSArray:params[@"fields"]];
     NSDictionary *query = [RCTConvert NSDictionary:params[@"query"]];
     
-    //NSLog(@"query %@", query);
+    NSLog(@"query %@", query);
     
     
     MPMediaQuery *songsQuery = [MPMediaQuery songsQuery];
-    //[songsQuery addFilterPredicate:[MPMediaPropertyPredicate predicateWithValue:[NSNumber numberWithBool:NO] forProperty:MPMediaItemPropertyIsCloudItem]];
     if ([query objectForKey:@"title"] != nil) {
         NSString *searchTitle = [query objectForKey:@"title"];
         [songsQuery addFilterPredicate:[MPMediaPropertyPredicate predicateWithValue:searchTitle forProperty:MPMediaItemPropertyTitle comparisonType:MPMediaPredicateComparisonContains]];
@@ -53,6 +53,11 @@ RCT_EXPORT_METHOD(getTracks:(NSDictionary *)params successCallback:(RCTResponseS
     if ([query objectForKey:@"genre"] != nil) {
         NSString *searchGenre = [query objectForKey:@"genre"];
         [songsQuery addFilterPredicate:[MPMediaPropertyPredicate predicateWithValue:searchGenre forProperty:MPMediaItemPropertyGenre comparisonType:MPMediaPredicateComparisonContains]];
+    }
+    if ([query objectForKey:@"persistentId"] != nil) {
+        NSNumber *persistentId = [query objectForKey:@"persistentId"];
+        NSNumber  *searchPersistentId = [NSNumber numberWithInteger: [persistentId integerValue]];
+        [songsQuery addFilterPredicate:[MPMediaPropertyPredicate predicateWithValue:persistentId forProperty:MPMediaItemPropertyPersistentID comparisonType:MPMediaPredicateComparisonContains]];
     }
     
     NSMutableArray *mutableSongsToSerialize = [NSMutableArray array];
@@ -185,13 +190,14 @@ RCT_EXPORT_METHOD(getTracks:(NSDictionary *)params successCallback:(RCTResponseS
                 }
                 [songDictionary setValue:[NSString stringWithString:comments] forKey:@"comments"];
             }
-            /*if ([fields containsObject: @"assetUrl"]) {
-                NSString *assetUrl = [song valueForProperty: MPMediaItemPropertyAssetURL];
+            if ([fields containsObject: @"assetUrl"]) {
+                NSURL *url = [song valueForProperty: MPMediaItemPropertyAssetURL];
+                NSString *assetUrl = url.absoluteString;
                 if (assetUrl == nil) {
                     assetUrl = @"";
                 }
                 [songDictionary setValue:[NSString stringWithString:assetUrl] forKey:@"assetUrl"];
-            }*/
+            }
             if ([fields containsObject: @"isCloudItem"]) {
                 NSString *isCloudItem = [song valueForProperty: MPMediaItemPropertyIsCloudItem];
                 
@@ -237,6 +243,51 @@ RCT_EXPORT_METHOD(getTracks:(NSDictionary *)params successCallback:(RCTResponseS
     }
     
     successCallback(@[mutableSongsToSerialize]);
+}
+
+RCT_EXPORT_METHOD(playTrack:(NSDictionary *)trackItem callback:(RCTResponseSenderBlock)callback) {
+    NSLog(@"%@ %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+    
+    NSLog(@"trackItem %@", trackItem);
+    
+    // NSNumber *persistentId = [RCTConvert NSNumber:trackItem[@"persistentId"]];
+    NSString *searchTitle = [trackItem objectForKey:@"title"];
+    NSString *searchAlbumTitle = [trackItem objectForKey:@"albumTitle"];
+    
+    if (searchTitle != nil) {
+    
+        MPMediaQuery *songQuery = [[MPMediaQuery alloc] init];
+    
+    
+        [songQuery addFilterPredicate:[MPMediaPropertyPredicate predicateWithValue:searchTitle forProperty: MPMediaItemPropertyTitle comparisonType:MPMediaPredicateComparisonContains]];
+        [songQuery addFilterPredicate:[MPMediaPropertyPredicate predicateWithValue:searchAlbumTitle forProperty:MPMediaItemPropertyAlbumTitle comparisonType:MPMediaPredicateComparisonContains]];
+    
+        NSLog(@"song query");
+        if (songQuery.items.count > 0)
+        {
+            NSLog(@"song exists! %@");
+            [[MPMusicPlayerController applicationMusicPlayer] setQueueWithQuery: songQuery];
+            [[MPMusicPlayerController applicationMusicPlayer] play];
+            
+            callback(@[[NSNull null]]);
+        } else {
+            callback(@[@"Track has not been found"]);
+        }
+    } else {
+        callback(@[@"Track has not been found"]);
+    }
+}
+
+RCT_EXPORT_METHOD(play) {
+    NSLog(@"%@ %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+    
+    [[MPMusicPlayerController applicationMusicPlayer] play];
+}
+
+RCT_EXPORT_METHOD(pause) {
+    NSLog(@"%@ %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+    
+    [[MPMusicPlayerController applicationMusicPlayer] pause];
 }
 
 @end

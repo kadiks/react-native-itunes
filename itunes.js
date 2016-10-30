@@ -15,5 +15,31 @@ module.exports = {
         resolve(tracks);
       });
     });
+  },
+
+  pause: function() {
+    RNiTunes.pause();
+  },
+
+  play: function() {
+    RNiTunes.play();
+  },
+
+  playTrack: function(trackItem) {
+    return new Promise((resolve, reject) => {
+      if (
+        !trackItem.hasOwnProperty('title') ||
+        !trackItem.hasOwnProperty('albumTitle')) {
+        reject('To play a track, you need to send the [title] and the [albumTtile] properties');
+        return;
+      }
+      RNiTunes.playTrack(trackItem || {}, (err) => {
+        if (!err) {
+          resolve();
+        } else {
+          reject(err);
+        }
+      });
+    });
   }
 };

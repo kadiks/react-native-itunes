@@ -71,6 +71,27 @@ iTunes.getTracks({
 
 ```
 
+### Play searched track
+```js
+import iTunes from 'react-native-itunes';
+
+iTunes.getTracks({
+  query: {
+    title: 'digital',
+    albumArtist: 'daft'
+  }
+}).then((tracks) => {
+  iTunes.playTrack(tracks[0])
+    .then(res => {
+      console.log('is playing');
+    })
+    .catch(err => {
+      alert('err');
+    });
+});
+
+```
+
 Note: it works on the device (it even shows on the cloud Apple Music saved songs)
 
 ## API
@@ -102,13 +123,42 @@ Returns [TrackItem]
 
 	- If you need more info, check out those properties list and do not hesitate doing a pull request (PR) with your addition
 
+## Changelog
+
+### 0.3.0
+
+- Play track from TrackItem.title & TrackItem.albumTitle
+- Play/Pause
+
+### 0.2.0 (internal)
+
+- Query tracks
+- Filter tracks
+- Get specific fields
+
+### 0.1.0
+
+- Search all tracks
+
 ## Roadmap
 
 
 - [ ] Add tests
-- [ ] Play from searched items
+- [ ] Refactor to have one function dealing with queries
+- [ ] Refactor #getTracks to always return TrackItem.title & TrackItem.albumTitle
+
+### Player
+
+- [x] Play from searched items
+- [x] play()/pause()/isPlaying()
 
 ### getTracks(params)
 
 - [x] Object [params.query={}]
 - [x] Object [params.fields={}]
+
+## Known bugs
+
+### Unplayable tracks
+
+For some reasons some tracks are not playing while they can be searched. If you have a clue why, please share.
