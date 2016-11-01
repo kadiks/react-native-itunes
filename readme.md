@@ -15,7 +15,7 @@ npm install react-native-itunes --save
 #### With React Native 0.27+
 
 ```shell
-react-native link react-native-device-info
+react-native link react-native-itunes
 ```
 
 #### With older versions of React Native
@@ -23,14 +23,14 @@ react-native link react-native-device-info
 You need [`rnpm`](https://github.com/rnpm/rnpm) (`npm install -g rnpm`)
 
 ```shell
-rnpm link react-native-device-info
+rnpm link react-native-itunes
 ```
 
 ## Manually link
 
 In XCode, in the project navigator, right click Libraries ➜ Add Files to [your project's name] Go to node_modules ➜ react-native-itunes and add the .xcodeproj file
 
-In XCode, in the project navigator, select your project. Add the lib*.a from the deviceinfo project to your project's Build Phases ➜ Link Binary With Libraries Click .xcodeproj file you added before in the project navigator and go the Build Settings tab. Make sure 'All' is toggled on (instead of 'Basic'). Look for Header Search Paths and make sure it contains both ```$(SRCROOT)/../react-native/React``` and ```$(SRCROOT)/../../React``` - mark both as recursive.
+In XCode, in the project navigator, select your project. Add the lib*.a from the react-native-itunes project to your project's Build Phases ➜ Link Binary With Libraries Click .xcodeproj file you added before in the project navigator and go the Build Settings tab. Make sure 'All' is toggled on (instead of 'Basic'). Look for Header Search Paths and make sure it contains both ```$(SRCROOT)/../react-native/React``` and ```$(SRCROOT)/../../React``` - mark both as recursive.
 
 Run your project (Cmd+R)
 
@@ -146,11 +146,13 @@ Returns [TrackItem]
 - [ ] Add tests
 - [ ] Refactor to have one function dealing with queries
 - [ ] Refactor #getTracks to always return TrackItem.title & TrackItem.albumTitle
+- [ ] Change all code and examples to ES6
+- [ ] Get playlist?
 
 ### Player
 
 - [x] Play from searched items
-- [x] play()/pause()/isPlaying()
+- [x] play()/pause()
 
 ### getTracks(params)
 
