@@ -262,10 +262,8 @@ RCT_EXPORT_METHOD(playTrack:(NSDictionary *)trackItem callback:(RCTResponseSende
         [songQuery addFilterPredicate:[MPMediaPropertyPredicate predicateWithValue:searchTitle forProperty: MPMediaItemPropertyTitle comparisonType:MPMediaPredicateComparisonContains]];
         [songQuery addFilterPredicate:[MPMediaPropertyPredicate predicateWithValue:searchAlbumTitle forProperty:MPMediaItemPropertyAlbumTitle comparisonType:MPMediaPredicateComparisonContains]];
 
-        NSLog(@"song query");
         if (songQuery.items.count > 0)
         {
-            NSLog(@"song exists! %@");
             [[MPMusicPlayerController applicationMusicPlayer] setQueueWithQuery: songQuery];
             [[MPMusicPlayerController applicationMusicPlayer] play];
 
