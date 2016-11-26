@@ -92,6 +92,26 @@ iTunes.getTracks({
 
 ```
 
+### Show album cover
+```js
+import iTunes from 'react-native-itunes';
+
+iTunes.getTracks({
+  fields: ['title', 'artwork']
+}).then((tracks) => {
+  this.setState({
+    track: tracks[0],
+  });
+});
+
+...
+
+render() {
+  return <Image source={{uri: this.state.track.artwork }} style={{ width: 100, height: 100 }} />
+}
+
+```
+
 Note: it works on the device (it even shows on the cloud Apple Music saved songs)
 
 ## API
@@ -124,6 +144,10 @@ Returns [TrackItem]
 	- If you need more info, check out those properties list and do not hesitate doing a pull request (PR) with your addition
 
 ## Changelog
+
+### 0.3.1
+
+- Access artwork as base64
 
 ### 0.3.0
 

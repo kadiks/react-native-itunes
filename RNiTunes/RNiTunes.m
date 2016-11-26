@@ -158,11 +158,13 @@ RCT_EXPORT_METHOD(getTracks:(NSDictionary *)params successCallback:(RCTResponseS
 
                 [songDictionary setValue:[NSNumber numberWithInt:discCount] forKey:@"discCount"];
             }
-            /*if ([fields containsObject: @"artwork"]) {
-                NSString *artwork = [song valueForProperty: MPMediaItemPropertyArtwork];
-
-                [songDictionary setValue:[NSString stringWithString:artwork] forKey:@"artwork"];
-            }*/
+            if ([fields containsObject: @"artwork"]) {
+                MPMediaItemArtwork *artwork = [song valueForProperty: MPMediaItemPropertyArtwork];
+                // NSLog(@"artwork %@", artwork);
+                UIImage *image = [artwork imageWithSize:CGSizeMake(100, 100)];
+                NSString *base64 = [NSString stringWithFormat:@"%@%@", @"data:image/jpeg;base64,", [self imageToNSString:image]];
+                [songDictionary setValue:base64 forKey:@"artwork"];
+            }
             if ([fields containsObject: @"lyrics"]) {
                 NSString *lyrics = [song valueForProperty: MPMediaItemPropertyLyrics];
 
@@ -262,8 +264,10 @@ RCT_EXPORT_METHOD(playTrack:(NSDictionary *)trackItem callback:(RCTResponseSende
         [songQuery addFilterPredicate:[MPMediaPropertyPredicate predicateWithValue:searchTitle forProperty: MPMediaItemPropertyTitle comparisonType:MPMediaPredicateComparisonContains]];
         [songQuery addFilterPredicate:[MPMediaPropertyPredicate predicateWithValue:searchAlbumTitle forProperty:MPMediaItemPropertyAlbumTitle comparisonType:MPMediaPredicateComparisonContains]];
 
+        NSLog(@"song query");
         if (songQuery.items.count > 0)
         {
+            NSLog(@"song exists! %@");
             [[MPMusicPlayerController applicationMusicPlayer] setQueueWithQuery: songQuery];
             [[MPMusicPlayerController applicationMusicPlayer] play];
 
@@ -286,6 +290,13 @@ RCT_EXPORT_METHOD(pause) {
     NSLog(@"%@ %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 
     [[MPMusicPlayerController applicationMusicPlayer] pause];
+}
+
+- (NSString *)imageToNSString:(UIImage *)image
+{
+    NSData *data = UIImagePNGRepresentation(image);
+
+    return [data base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
 }
 
 @end

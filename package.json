@@ -1,22 +1,22 @@
-{
-  "name": "react-native-itunes",
-  "version": "0.3.0",
-  "description": "Get iTunes info",
-  "main": "itunes.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kadiks/react-native-itunes.git"
-  },
-  "keywords": [
-    "react-component",
-    "react-native",
-    "ios",
-    "itunes"
-  ],
-  "author": "Jénaïc Cambré <me@jenaiccambre.com> (http://www.jenaiccambre.com/)",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/kadiks/react-native-itunes/issues"
-  },
-  "homepage": "https://github.com/kadiks/react-native-itunes#readme"
-}
+  {
+    "name": "react-native-itunes",
+    "version": "0.3.1",
+    "description": "Get iTunes info",
+    "main": "itunes.js",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/kadiks/react-native-itunes.git"
+    },
+    "keywords": [
+      "react-component",
+      "react-native",
+      "ios",
+      "itunes"
+    ],
+    "author": "Jénaïc Cambré <me@jenaiccambre.com> (http://www.jenaiccambre.com/)",
+    "license": "MIT",
+    "bugs": {
+      "url": "https://github.com/kadiks/react-native-itunes/issues"
+    },
+    "homepage": "https://github.com/kadiks/react-native-itunes#readme"
+  }
