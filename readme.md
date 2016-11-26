@@ -1,6 +1,10 @@
 # iTunes React Native
 
+[![npm version](https://badge.fury.io/js/react-native-itunes.svg)](https://badge.fury.io/js/react-native-itunes)
+
 Access your iTunes library (iOS only)
+
+## [Example project](https://github.com/kadiks/rnitunesdemo)
 
 ## Installation
 
