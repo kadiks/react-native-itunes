@@ -159,9 +159,12 @@ RCT_EXPORT_METHOD(getTracks:(NSDictionary *)params successCallback:(RCTResponseS
                 [songDictionary setValue:[NSNumber numberWithInt:discCount] forKey:@"discCount"];
             }
             if ([fields containsObject: @"artwork"]) {
+                // http://stackoverflow.com/questions/25998621/mpmediaitemartwork-is-null-while-cover-is-available-in-itunes
                 MPMediaItemArtwork *artwork = [song valueForProperty: MPMediaItemPropertyArtwork];
                 // NSLog(@"artwork %@", artwork);
                 UIImage *image = [artwork imageWithSize:CGSizeMake(100, 100)];
+                // http://www.12qw.ch/2014/12/tooltip-decoding-base64-images-with-chrome-data-url/
+                // http://stackoverflow.com/a/510444/185771
                 NSString *base64 = [NSString stringWithFormat:@"%@%@", @"data:image/jpeg;base64,", [self imageToNSString:image]];
                 [songDictionary setValue:base64 forKey:@"artwork"];
             }
@@ -292,6 +295,7 @@ RCT_EXPORT_METHOD(pause) {
     [[MPMusicPlayerController applicationMusicPlayer] pause];
 }
 
+// http://stackoverflow.com/questions/22243854/encode-image-to-base64-get-a-invalid-base64-string-ios-using-base64encodedstri
 - (NSString *)imageToNSString:(UIImage *)image
 {
     NSData *data = UIImagePNGRepresentation(image);

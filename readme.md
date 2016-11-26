@@ -166,11 +166,10 @@ Returns [TrackItem]
 
 ## Roadmap
 
-
 - [ ] Add tests
 - [ ] Refactor to have one function dealing with queries
 - [ ] Refactor #getTracks to always return TrackItem.title & TrackItem.albumTitle
-- [ ] Change all code and examples to ES6
+- [x] Change all code and examples to ES6
 - [ ] Get playlist?
 
 ### Player
