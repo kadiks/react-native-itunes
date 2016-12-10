@@ -120,7 +120,18 @@ Note: it works on the device (it even shows on the cloud Apple Music saved songs
 
 ## API
 
-### getTracks({ fields, query })
+### getPlaylists({ fields = {}, query = {} })
+
+Returns [PlaylistItem]
+
+- fields: Array
+  - name
+  - tracks
+  - playCount
+- query: Object
+  - name
+
+### getTracks({ fields = {}, query = {} })
 
 Returns [TrackItem]
 
@@ -153,6 +164,10 @@ Returns [TrackItem]
 
 ## Changelog
 
+### 0.4.0
+
+- Get playlist
+
 ### 0.3.1
 
 - Access artwork as base64
@@ -178,7 +193,7 @@ Returns [TrackItem]
 - [ ] Refactor to have one function dealing with queries
 - [ ] Refactor #getTracks to always return TrackItem.title & TrackItem.albumTitle
 - [x] Change all code and examples to ES6
-- [ ] Get playlist?
+- [x] Get playlist
 
 ### Player
 
@@ -195,3 +210,7 @@ Returns [TrackItem]
 ### Unplayable tracks
 
 For some reasons some tracks are not playing while they can be searched. If you have a clue why, please share.
+
+## Thanks to
+
+[Malone Hedges](https://twitter.com/malonehedges) for the getPlaylists(). I discovered that some Apple Music songs are only available via playlists

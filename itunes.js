@@ -9,9 +9,18 @@ var {
 } = require('react-native').NativeModules;
 
 module.exports = {
+
+  getPlaylists: function(params) {
+    return new Promise((resolve) => {
+      RNiTunes.getPlaylists(params || {}, (playlists) => {
+        resolve(playlists);
+      });
+    });
+  },
+
   getTracks: function(params) {
     return new Promise((resolve) => {
-      RNiTunes.getTracks(params || {},(tracks) => {
+      RNiTunes.getTracks(params || {}, (tracks) => {
         resolve(tracks);
       });
     });
