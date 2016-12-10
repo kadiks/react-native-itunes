@@ -135,7 +135,7 @@ Returns [TrackItem]
 
 ### 0.4.0
 
-- Get playlist
+- Get playlists
 
 ### 0.3.1
 
@@ -179,6 +179,12 @@ Returns [TrackItem]
 ### Unplayable tracks
 
 For some reasons some tracks are not playing while they can be searched. If you have a clue why, please share.
+
+### Playlist tracks
+
+Some playlist tracks cannot be played. Maybe those which are not cached.
+Might be related to first bug, but the first bug does not through a warning
+Investigating to flag them as unplayable before getting an error...
 
 ## Thanks to
 
