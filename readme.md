@@ -38,9 +38,11 @@ In XCode, in the project navigator, select your project. Add the lib*.a from the
 
 Run your project (Cmd+R)
 
-## Example
+## Examples
 
-### Get all tracks
+Note: it works on the device (it even shows on the cloud Apple Music saved songs)
+
+# Get all tracks
 ```js
 import iTunes from 'react-native-itunes';
 
@@ -49,41 +51,26 @@ iTunes.getTracks().then((tracks) => {
 });
 
 ```
-### Get all tracks and extract only genre and title
+
+# Get all playlists
+Beware, check other examples for better performances
 ```js
 import iTunes from 'react-native-itunes';
 
-iTunes.getTracks({
-  fields: ['title', 'genre']
-}).then((tracks) => {
-  console.log(tracks);
+iTunes.getPlaylists().then(playlists => {
+  console.log(playlists);
 });
-
 ```
-### Filter track by title and album artist
+
+# Play searched track
 ```js
 import iTunes from 'react-native-itunes';
 
 iTunes.getTracks({
   query: {
     title: 'digital',
-    albumArtist: 'daft'
-  }
-}).then((tracks) => {
-  console.log(tracks);
-});
-
-```
-
-### Play searched track
-```js
-import iTunes from 'react-native-itunes';
-
-iTunes.getTracks({
-  query: {
-    title: 'digital',
-    albumArtist: 'daft'
-  }
+    albumArtist: 'daft',
+  },
 }).then((tracks) => {
   iTunes.playTrack(tracks[0])
     .then(res => {
@@ -96,25 +83,7 @@ iTunes.getTracks({
 
 ```
 
-### Show album cover
-```js
-import iTunes from 'react-native-itunes';
-
-iTunes.getTracks({
-  fields: ['title', 'artwork']
-}).then((tracks) => {
-  this.setState({
-    track: tracks[0],
-  });
-});
-
-...
-
-render() {
-  return <Image source={{uri: this.state.track.artwork }} style={{ width: 100, height: 100 }} />
-}
-
-```
+More [examples](./examples.md)
 
 Note: it works on the device (it even shows on the cloud Apple Music saved songs)
 
