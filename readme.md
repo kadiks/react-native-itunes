@@ -132,6 +132,10 @@ Returns [TrackItem]
   - artist
   - genre
 
+### playTrack(Track)
+
+### pause()
+
 ## TrackItem
 
 - albumArtist
