@@ -116,6 +116,12 @@ Returns [TrackItem]
 
 ### pause()
 
+## PlaylistItem
+
+- name
+- playCount
+- tracks: [TrackItem]
+
 ## TrackItem
 
 - albumArtist
