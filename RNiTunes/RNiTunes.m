@@ -100,7 +100,6 @@ RCT_EXPORT_METHOD(getTracks:(NSDictionary *)params successCallback:(RCTResponseS
             }
             if ([fields containsObject: @"composerPersistentId"]) {
                 NSString *composerPersistentId = [song valueForProperty: MPMediaItemPropertyComposerPersistentID]; // filterable
-                
                 [songDictionary setValue:[NSNumber numberWithInt:composerPersistentId] forKey:@"composerPersistentId"];
             }
             if ([fields containsObject: @"podcastPersistentId"]) {
@@ -113,19 +112,34 @@ RCT_EXPORT_METHOD(getTracks:(NSDictionary *)params successCallback:(RCTResponseS
                 [songDictionary setValue:[NSNumber numberWithInt:mediaType] forKey:@"mediaType"];
             }
             if ([fields containsObject: @"title"]) {
+                if (title == nil) {
+                    title = @"";
+                }
                 [songDictionary setValue:[NSString stringWithString:title] forKey:@"title"];
             }
             if ([fields containsObject: @"albumTitle"]) {
+                if (albumTitle == nil) {
+                    albumTitle = @"";
+                }
                 [songDictionary setValue:[NSString stringWithString:albumTitle] forKey:@"albumTitle"];
             }
             if ([fields containsObject: @"artist"]) {
                 NSString *artist = [song valueForProperty: MPMediaItemPropertyArtist]; // filterable
+                if (artist == nil) {
+                    artist = @"";
+                }
                 [songDictionary setValue:[NSString stringWithString:artist] forKey:@"artist"];
             }
             if ([fields containsObject: @"albumArtist"]) {
+                if (albumArtist == nil) {
+                    albumArtist = @"";
+                }
                 [songDictionary setValue:[NSString stringWithString:albumArtist] forKey:@"albumArtist"];
             }
             if ([fields containsObject: @"genre"]) {
+                if (genre == nil) {
+                    genre = @"";
+                }
                 [songDictionary setValue:[NSString stringWithString:genre] forKey:@"genre"];
             }
             if ([fields containsObject: @"composer"]) {
