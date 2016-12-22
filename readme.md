@@ -195,3 +195,4 @@ Investigating to flag them as unplayable before getting an error...
 ## Thanks to
 
 [Malone Hedges](https://twitter.com/malonehedges) for the getPlaylists(). I discovered that some Apple Music songs are only available via playlists
+Gracias a (Indesign Colombia)[https://www.indesigncolombia.com/] for this PR that fixes a lot of obvious and preventable mistakes
