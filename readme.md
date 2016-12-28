@@ -93,7 +93,7 @@ Note: it works on the device (it even shows on the cloud Apple Music saved songs
 
 ## API
 
-### getPlaylists({ fields = {}, query = {} })
+### getPlaylists({ fields = [], query = {} })
 
 Returns [PlaylistItem]
 
@@ -104,7 +104,7 @@ Returns [PlaylistItem]
 - query: Object
   - name
 
-### getTracks({ fields = {}, query = {} })
+### getTracks({ fields = [], query = {} })
 
 Returns [TrackItem]
 
