@@ -143,6 +143,10 @@ Returns [TrackItem]
 
 ## Changelog
 
+### 0.4.2
+
+- Field validation and conversion
+
 ### 0.4.0
 
 - Get playlists
