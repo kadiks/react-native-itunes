@@ -14,6 +14,10 @@ In the command line, first you need to install react-native-itunes:
 npm install react-native-itunes --save
 ```
 
+### Permissions - iOS 10
+
+- Add the key *Privacy - Apple Music usage Description* `NSAppleMusicUsageDescription` in your Info.plist with a description: `$(PRODUCT_NAME) wants access to your Music library`
+
 ## Automatically link
 
 #### With React Native 0.27+
@@ -191,6 +195,10 @@ For some reasons some tracks are not playing while they can be searched. If you 
 Some playlist tracks cannot be played. Maybe those which are not cached.
 Might be related to first bug, but the first bug does not through a warning
 Investigating to flag them as unplayable before getting an error...
+
+### Negative persistent IDs
+
+Persistent IDs are `uint64_t (unsigned long long)`, a basic conversion to int turn them into negative number.
 
 ## Thanks to
 
