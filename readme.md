@@ -6,6 +6,8 @@ Access your iTunes library (iOS only)
 
 ## [Example project](https://github.com/kadiks/rnitunesdemo)
 
+For RN older than 0.40.0, use the release 0.4.2 of this library
+
 ## Installation
 
 In the command line, first you need to install react-native-itunes:
