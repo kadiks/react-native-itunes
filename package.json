@@ -1,6 +1,6 @@
 {
   "name": "react-native-itunes",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "Get iTunes info",
   "main": "itunes.js",
   "repository": {
@@ -11,12 +11,18 @@
     "react-component",
     "react-native",
     "ios",
-    "itunes"
+    "itunes",
+    "apple",
+    "music",
+    "apple music"
   ],
   "author": "Jénaïc Cambré <me@jenaiccambre.com> (http://www.jenaiccambre.com/)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/kadiks/react-native-itunes/issues"
   },
-  "homepage": "https://github.com/kadiks/react-native-itunes#readme"
+  "homepage": "https://github.com/kadiks/react-native-itunes#readme",
+  "peerDependencies": {
+    "react-native": ">=0.40"
+  }
 }

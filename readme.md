@@ -207,4 +207,4 @@ Persistent IDs are `uint64_t (unsigned long long)`, a basic conversion to int tu
 ## Thanks to
 
 [Malone Hedges](https://twitter.com/malonehedges) for the getPlaylists(). I discovered that some Apple Music songs are only available via playlists
-Gracias a (Indesign Colombia)[https://www.indesigncolombia.com/] for this PR that fixes a lot of obvious and preventable mistakes
+Gracias a [Indesign Colombia](https://www.indesigncolombia.com/) for this PR that fixes a lot of obvious and preventable mistakes
