@@ -26,6 +26,22 @@ module.exports = {
     });
   },
 
+  getArtists: function(params) {
+    return new Promise((resolve) => {
+      RNiTunes.getArtists(params || {}, (tracks) => {
+        resolve(tracks);
+      });
+    });
+  },
+
+  getAlbums: function(params) {
+    return new Promise((resolve) => {
+      RNiTunes.getAlbums(params || {}, (tracks) => {
+        resolve(tracks);
+      });
+    });
+  },
+
   pause: function() {
     RNiTunes.pause();
   },
