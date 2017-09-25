@@ -21,6 +21,59 @@
 
 RCT_EXPORT_MODULE()
 
+RCT_EXPORT_METHOD(getArtists:(NSDictionary *)params successCallback:(RCTResponseSenderBlock)successCallback) {
+    
+    MPMediaQuery *artistsQuery = [MPMediaQuery artistsQuery];
+    NSArray      *artistsArray = [artistsQuery collections];
+    NSMutableArray *mutableArtistsToSerialize = [NSMutableArray array];
+    
+    for (MPMediaItemCollection *mediaItemCollection in artistsArray) {
+        MPMediaItem *mediaItem = [mediaItemCollection representativeItem];
+        NSString       *artist = [mediaItem valueForProperty:MPMediaItemPropertyArtist];
+        [mutableArtistsToSerialize addObject:artist];
+    }
+    successCallback(@[mutableArtistsToSerialize]);
+}
+
+RCT_EXPORT_METHOD(getAlbums:(NSDictionary *)params successCallback:(RCTResponseSenderBlock)successCallback) {
+    
+    MPMediaQuery *artistsQuery = [MPMediaQuery albumsQuery];
+    NSArray      *albumsArray      = [artistsQuery collections];
+    NSMutableArray *mutableAlbumsToSerialize = [NSMutableArray array];
+    
+    for (MPMediaItemCollection *mediaItemCollection in albumsArray) {
+        NSDictionary *albumDictionary = [NSMutableDictionary dictionary];
+        
+        MPMediaItem *mediaItem    = [mediaItemCollection representativeItem];
+        NSString    *albumTitle   = [mediaItem valueForProperty:MPMediaItemPropertyAlbumTitle];
+        NSString    *albumArtist  = [mediaItem valueForProperty:MPMediaItemPropertyAlbumArtist];
+
+        NSString *base64 = @"";
+        // http://stackoverflow.com/questions/25998621/mpmediaitemartwork-is-null-while-cover-is-available-in-itunes
+        MPMediaItemArtwork *artwork = [mediaItem valueForProperty: MPMediaItemPropertyArtwork];
+        if (artwork != nil) {
+            //NSLog(@"artwork %@", artwork);
+            UIImage *image = [artwork imageWithSize:CGSizeMake(100, 100)];
+            // http://www.12qw.ch/2014/12/tooltip-decoding-base64-images-with-chrome-data-url/
+            // http://stackoverflow.com/a/510444/185771
+            base64 = [NSString stringWithFormat:@"%@%@", @"data:image/jpeg;base64,", [self imageToNSString:image]];
+        }
+        if (artwork == nil) {
+            albumArtist = @"";
+        }
+        
+        if (albumTitle == nil) {
+            albumTitle = @"";
+        }
+        if (albumArtist == nil) {
+            albumArtist = @"";
+        }
+        
+        albumDictionary = @{@"albumTitle":albumTitle, @"albumArtist": albumArtist, @"artwork": base64};
+        [mutableAlbumsToSerialize addObject:albumDictionary];
+    }
+    successCallback(@[mutableAlbumsToSerialize]);
+}
 
 
 RCT_EXPORT_METHOD(getTracks:(NSDictionary *)params successCallback:(RCTResponseSenderBlock)successCallback) {
@@ -29,11 +82,24 @@ RCT_EXPORT_METHOD(getTracks:(NSDictionary *)params successCallback:(RCTResponseS
     
     NSArray *fields = [RCTConvert NSArray:params[@"fields"]];
     NSDictionary *query = [RCTConvert NSDictionary:params[@"query"]];
+    NSString *type  = [RCTConvert NSString:params[@"type"]];
     
     // NSLog(@"query %@", query);
     
-    
-    MPMediaQuery *songsQuery = [MPMediaQuery songsQuery];
+    MPMediaQuery *songsQuery;
+    if ( [type isEqual: @"podcasts"] ){
+        songsQuery = [MPMediaQuery podcastsQuery];
+    }else if ( [type isEqual: @"audiobooks"] ){
+        songsQuery = [MPMediaQuery audiobooksQuery];
+    //}else if ( [type isEqual: @"compilations"]) {
+    //    songsQuery = [MPMediaQuery compilationsQuery];
+    //}else if ( [type isEqual: @"composers"] ){
+    //    songsQuery = [MPMediaQuery composersQuery];
+    }else{
+        songsQuery = [MPMediaQuery songsQuery];
+    }
+
+
     if ([query objectForKey:@"title"] != nil) {
         NSString *searchTitle = [query objectForKey:@"title"];
         [songsQuery addFilterPredicate:[MPMediaPropertyPredicate predicateWithValue:searchTitle forProperty:MPMediaItemPropertyTitle comparisonType:MPMediaPredicateComparisonContains]];
