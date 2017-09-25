@@ -95,6 +95,14 @@ Note: it works on the device (it even shows on the cloud Apple Music saved songs
 
 ## API
 
+### getArtists()
+
+Returns [String] of artists
+
+### getAlbums()
+
+Returns [TrackItem]
+
 ### getPlaylists({ fields = [], query = {} })
 
 Returns [PlaylistItem]
@@ -106,7 +114,7 @@ Returns [PlaylistItem]
 - query: Object
   - name
 
-### getTracks({ fields = [], query = {} })
+### getTracks({ fields = [], query = {}, type: '' })
 
 Returns [TrackItem]
 
@@ -117,6 +125,10 @@ Returns [TrackItem]
   - albumTitle
   - artist
   - genre
+- type: String
+  - default to `''` and will return songs
+  - `audiobooks` will return the list of audiobooks
+  - `podcasts` will return the list of podcasts
 
 ### playTrack(Track)
 
@@ -144,6 +156,12 @@ Returns [TrackItem]
 	- If you need more info, check out those properties list and do not hesitate doing a pull request (PR) with your addition
 
 ## Changelog
+
+### 0.4.4
+
+- Get all albums `getAlbums()`
+- Get all artists `getArtists()`
+- Get audiobooks and podcasts
 
 ### 0.4.2
 
@@ -175,8 +193,11 @@ Returns [TrackItem]
 ## Roadmap
 
 - [ ] Add tests
-- [ ] Refactor to have one function dealing with queries
+- [ ] Create a query builder function to be called from all public methods
 - [ ] Refactor #getTracks to always return TrackItem.title & TrackItem.albumTitle
+- [ ] Remove default `artwork` property in `getAlbums()` to avoid performances issues
+- [ ] Change `getArtists()` to return [TrackItem] and not [String]
+- [ ] Add same filtering capabilities from `getTracks()` to `getAlbums()` & `getArtists()`
 - [x] Change all code and examples to ES6
 - [x] Get playlist
 
