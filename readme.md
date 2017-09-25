@@ -198,6 +198,7 @@ Returns [TrackItem]
 - [ ] Remove default `artwork` property in `getAlbums()` to avoid performances issues
 - [ ] Change `getArtists()` to return [TrackItem] and not [String]
 - [ ] Add same filtering capabilities from `getTracks()` to `getAlbums()` & `getArtists()`
+- [ ] Remove playable capabilities all together (now with iOS11, it needs a new authorization process)
 - [x] Change all code and examples to ES6
 - [x] Get playlist
 
