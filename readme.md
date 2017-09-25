@@ -159,6 +159,8 @@ Returns [TrackItem]
 
 ### 0.4.4
 
+Thanks to @kurokky
+
 - Get all albums `getAlbums()`
 - Get all artists `getArtists()`
 - Get audiobooks and podcasts
