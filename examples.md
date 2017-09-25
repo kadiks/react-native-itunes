@@ -33,6 +33,31 @@ iTunes.getTracks({
 
 ```
 
+# Get all podcasts
+```js
+import iTunes from 'react-native-itunes';
+
+iTunes.getTracks({
+  type: 'podcasts',
+}).then((tracks) => {
+  console.log(tracks);
+});
+
+```
+
+# Get all audiobooks
+```js
+import iTunes from 'react-native-itunes';
+
+iTunes.getTracks({
+  type: 'audiobooks',
+}).then((tracks) => {
+  console.log(tracks);
+});
+
+```
+
+
 # Play searched track
 ```js
 import iTunes from 'react-native-itunes';
@@ -104,5 +129,23 @@ iTunes.getPlaylists({
   },
 }).then(playlists => {
   console.log(playlists);
+});
+```
+
+# Get all artists
+```js
+import iTunes from 'react-native-itunes';
+
+iTunes.getArtists().then(artists => {
+  console.log(artists); // ['Daft Punk', 'Pharell Williams', ...]
+});
+```
+
+# Get all albums
+```js
+import iTunes from 'react-native-itunes';
+
+iTunes.getAlbums().then(albums => {
+  console.log(albums); // [TrackItem] with 3 properties: albumTitle, albumArtist and artwork
 });
 ```
