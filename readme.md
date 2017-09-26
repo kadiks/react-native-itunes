@@ -159,7 +159,7 @@ Returns [TrackItem]
 
 ### 0.4.4
 
-Thanks to @kurokky
+Thanks to [kurokky](https://github.com/kurokky)
 
 - Get all albums `getAlbums()`
 - Get all artists `getArtists()`
