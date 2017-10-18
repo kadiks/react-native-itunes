@@ -549,6 +549,15 @@ RCT_EXPORT_METHOD(pause) {
     [[MPMusicPlayerController applicationMusicPlayer] pause];
 }
 
+RCT_EXPORT_METHOD(getCurrentPlayTime:(RCTResponseSenderBlock)callback)
+{
+    NSTimeInterval interval = [[MPMusicPlayerController iPodMusicPlayer] currentPlaybackTime];
+    NSNumber *sec = [NSNumber numberWithDouble:interval];
+    callback(@[[NSNull null], sec]);
+}
+
+
+
 // http://stackoverflow.com/questions/22243854/encode-image-to-base64-get-a-invalid-base64-string-ios-using-base64encodedstri
 - (NSString *)imageToNSString:(UIImage *)image
 {
