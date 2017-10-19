@@ -41,9 +41,9 @@ module.exports = {
       });
     });
   },
-  getCurrentPlayTime: function(params) {
+  getCurrentPlayTime: function() {
     return new Promise((resolve) => {
-      RNiTunes.getCurrentPlayTime( (time) => {
+      RNiTunes.getCurrentPlayTime({}, (time) => {
         resolve(time);
       });
     });
