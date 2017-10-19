@@ -551,8 +551,8 @@ RCT_EXPORT_METHOD(pause) {
 
 RCT_EXPORT_METHOD(getCurrentPlayTime:(RCTResponseSenderBlock)callback)
 {
-    NSTimeInterval interval = [[MPMusicPlayerController iPodMusicPlayer] currentPlaybackTime];
-    NSNumber *sec = [NSNumber numberWithDouble:interval];
+    NSInteger sec = [[MPMusicPlayerController iPodMusicPlayer] currentPlaybackTime];
+    
     callback(@[[NSNull null], sec]);
 }
 
