@@ -549,10 +549,10 @@ RCT_EXPORT_METHOD(pause) {
     [[MPMusicPlayerController applicationMusicPlayer] pause];
 }
 
-RCT_EXPORT_METHOD(getCurrentPlayTime:(RCTResponseSenderBlock)callback)
+RCT_EXPORT_METHOD(getCurrentPlayTime:(NSDictionary *)params callback:(RCTResponseSenderBlock)callback)
 {
     NSInteger sec = [[MPMusicPlayerController iPodMusicPlayer] currentPlaybackTime];
-    
+    NSLog(@"%@ %@","RNiTunes.getCurrentPlayTime: time = ", sec)
     callback(@[[NSNull null], sec]);
 }
 
