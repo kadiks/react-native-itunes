@@ -41,13 +41,14 @@ module.exports = {
       });
     });
   },
-  getCurrentPlayTime: function() {
+  getCurrentPlayTime: function(params) {
     return new Promise((resolve) => {
-      RNiTunes.getCurrentPlayTime({}, (time) => {
-        resolve(time);
+      RNiTunes.getElapsPlayTime((elapse) => {
+        resolve(elapse);
       });
     });
   },
+  
   pause: function() {
     RNiTunes.pause();
   },

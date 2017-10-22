@@ -16,17 +16,17 @@
 
 @implementation RNiTunes
 {
-    
+
 }
 
 RCT_EXPORT_MODULE()
 
 RCT_EXPORT_METHOD(getArtists:(NSDictionary *)params successCallback:(RCTResponseSenderBlock)successCallback) {
-    
+
     MPMediaQuery *artistsQuery = [MPMediaQuery artistsQuery];
     NSArray      *artistsArray = [artistsQuery collections];
     NSMutableArray *mutableArtistsToSerialize = [NSMutableArray array];
-    
+
     for (MPMediaItemCollection *mediaItemCollection in artistsArray) {
         MPMediaItem *mediaItem = [mediaItemCollection representativeItem];
         NSString       *artist = [mediaItem valueForProperty:MPMediaItemPropertyArtist];
@@ -36,14 +36,14 @@ RCT_EXPORT_METHOD(getArtists:(NSDictionary *)params successCallback:(RCTResponse
 }
 
 RCT_EXPORT_METHOD(getAlbums:(NSDictionary *)params successCallback:(RCTResponseSenderBlock)successCallback) {
-    
+
     MPMediaQuery *artistsQuery = [MPMediaQuery albumsQuery];
     NSArray      *albumsArray      = [artistsQuery collections];
     NSMutableArray *mutableAlbumsToSerialize = [NSMutableArray array];
-    
+
     for (MPMediaItemCollection *mediaItemCollection in albumsArray) {
         NSDictionary *albumDictionary = [NSMutableDictionary dictionary];
-        
+
         MPMediaItem *mediaItem    = [mediaItemCollection representativeItem];
         NSString    *albumTitle   = [mediaItem valueForProperty:MPMediaItemPropertyAlbumTitle];
         NSString    *albumArtist  = [mediaItem valueForProperty:MPMediaItemPropertyAlbumArtist];
@@ -61,14 +61,14 @@ RCT_EXPORT_METHOD(getAlbums:(NSDictionary *)params successCallback:(RCTResponseS
         if (artwork == nil) {
             albumArtist = @"";
         }
-        
+
         if (albumTitle == nil) {
             albumTitle = @"";
         }
         if (albumArtist == nil) {
             albumArtist = @"";
         }
-        
+
         albumDictionary = @{@"albumTitle":albumTitle, @"albumArtist": albumArtist, @"artwork": base64};
         [mutableAlbumsToSerialize addObject:albumDictionary];
     }
@@ -77,15 +77,15 @@ RCT_EXPORT_METHOD(getAlbums:(NSDictionary *)params successCallback:(RCTResponseS
 
 
 RCT_EXPORT_METHOD(getTracks:(NSDictionary *)params successCallback:(RCTResponseSenderBlock)successCallback) {
-    
+
     NSLog(@"%@ %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-    
+
     NSArray *fields = [RCTConvert NSArray:params[@"fields"]];
     NSDictionary *query = [RCTConvert NSDictionary:params[@"query"]];
     NSString *type  = [RCTConvert NSString:params[@"type"]];
-    
+
     // NSLog(@"query %@", query);
-    
+
     MPMediaQuery *songsQuery;
     if ( [type isEqual: @"podcasts"] ){
         songsQuery = [MPMediaQuery podcastsQuery];
@@ -125,11 +125,11 @@ RCT_EXPORT_METHOD(getTracks:(NSDictionary *)params successCallback:(RCTResponseS
         NSNumber  *searchPersistentId = [NSNumber numberWithInteger: [persistentId integerValue]];
         [songsQuery addFilterPredicate:[MPMediaPropertyPredicate predicateWithValue:persistentId forProperty:MPMediaItemPropertyPersistentID comparisonType:MPMediaPredicateComparisonContains]];
     }
-    
+
     NSMutableArray *mutableSongsToSerialize = [NSMutableArray array];
-    
+
     for (MPMediaItem *song in songsQuery.items) {
-        
+
         // filterable
         NSString *title = [song valueForProperty: MPMediaItemPropertyTitle]; // filterable
         NSString *albumTitle = [song valueForProperty: MPMediaItemPropertyAlbumTitle]; // filterable
@@ -137,7 +137,7 @@ RCT_EXPORT_METHOD(getTracks:(NSDictionary *)params successCallback:(RCTResponseS
         NSString *genre = [song valueForProperty: MPMediaItemPropertyGenre]; // filterable
         NSString *duration = [song valueForProperty: MPMediaItemPropertyPlaybackDuration];
         NSString *playCount = [song valueForProperty: MPMediaItemPropertyPlayCount];
-        
+
         if (title == nil) {
             title = @"";
         }
@@ -156,16 +156,16 @@ RCT_EXPORT_METHOD(getTracks:(NSDictionary *)params successCallback:(RCTResponseS
         if (playCount == nil) {
             playCount = @"0";
         }
-        
+
         //        NSString *test = @"1";
         //        int *testId = [test intValue];
         //        Boolean testBool = [test intValue];
         //        NSLog(@"testId %d", testId);
         //        NSLog(@"testBool %d", testBool);
-        
-        
+
+
         NSDictionary *songDictionary = [NSMutableDictionary dictionary];
-        
+
         if (fields == nil) {
             songDictionary = @{@"albumTitle":albumTitle, @"albumArtist": albumArtist, @"duration":[duration isKindOfClass:[NSString class]] ? [NSNumber numberWithInt:[duration intValue]] : duration, @"genre":genre, @"playCount": [NSNumber numberWithInt:[playCount intValue]], @"title": title};
         } else {
@@ -174,7 +174,7 @@ RCT_EXPORT_METHOD(getTracks:(NSDictionary *)params successCallback:(RCTResponseS
                 if (persistentId == nil) {
                     persistentId = @"0";
                 }
-                
+
                 [songDictionary setValue:[NSNumber numberWithInt:[persistentId intValue]] forKey:@"persistentId"];
             }
             if ([fields containsObject: @"albumPersistentId"]) {
@@ -182,7 +182,7 @@ RCT_EXPORT_METHOD(getTracks:(NSDictionary *)params successCallback:(RCTResponseS
                 if (albumPersistentId == nil) {
                     albumPersistentId = @"0";
                 }
-                
+
                 [songDictionary setValue:[NSNumber numberWithInt:[albumPersistentId intValue]] forKey:@"albumPersistentId"];
             }
             if ([fields containsObject: @"artistPersistentId"]) {
@@ -190,7 +190,7 @@ RCT_EXPORT_METHOD(getTracks:(NSDictionary *)params successCallback:(RCTResponseS
                 if (artistPersistentId == nil) {
                     artistPersistentId = @"0";
                 }
-                
+
                 [songDictionary setValue:[NSNumber numberWithInt:[artistPersistentId intValue]] forKey:@"artistPersistentId"];
             }
             if ([fields containsObject: @"albumArtistPersistentId"]) {
@@ -198,7 +198,7 @@ RCT_EXPORT_METHOD(getTracks:(NSDictionary *)params successCallback:(RCTResponseS
                 if (albumArtistPersistentId == nil) {
                     albumArtistPersistentId = @"0";
                 }
-                
+
                 [songDictionary setValue:[NSNumber numberWithInt:[albumArtistPersistentId intValue]] forKey:@"albumArtistPersistentId"];
             }
             if ([fields containsObject: @"genrePersistentId"]) {
@@ -206,7 +206,7 @@ RCT_EXPORT_METHOD(getTracks:(NSDictionary *)params successCallback:(RCTResponseS
                 if (genrePersistentId == nil) {
                     genrePersistentId = @"0";
                 }
-                
+
                 [songDictionary setValue:[NSNumber numberWithInt:[genrePersistentId intValue]] forKey:@"genrePersistentId"];
             }
             if ([fields containsObject: @"composerPersistentId"]) {
@@ -214,7 +214,7 @@ RCT_EXPORT_METHOD(getTracks:(NSDictionary *)params successCallback:(RCTResponseS
                 if (composerPersistentId == nil) {
                     composerPersistentId = @"0";
                 }
-                
+
                 [songDictionary setValue:[NSNumber numberWithInt:[composerPersistentId intValue]] forKey:@"composerPersistentId"];
             }
             if ([fields containsObject: @"podcastPersistentId"]) {
@@ -222,7 +222,7 @@ RCT_EXPORT_METHOD(getTracks:(NSDictionary *)params successCallback:(RCTResponseS
                 if (podcastPersistentId == nil) {
                     podcastPersistentId = @"0";
                 }
-                
+
                 [songDictionary setValue:[NSNumber numberWithInt:[podcastPersistentId intValue]] forKey:@"podcastPersistentId"];
             }
             if ([fields containsObject: @"mediaType"]) {
@@ -230,7 +230,7 @@ RCT_EXPORT_METHOD(getTracks:(NSDictionary *)params successCallback:(RCTResponseS
                 if (mediaType == nil) {
                     mediaType = @"";
                 }
-                
+
                 [songDictionary setValue:[NSNumber numberWithInt:mediaType] forKey:@"mediaType"];
             }
             if ([fields containsObject: @"title"]) {
@@ -320,7 +320,7 @@ RCT_EXPORT_METHOD(getTracks:(NSDictionary *)params successCallback:(RCTResponseS
             }
             /*if ([fields containsObject: @"releaseDate"]) {
              NSString *releaseDate = [song valueForProperty: MPMediaItemPropertyReleaseDate];
-             
+
              [songDictionary setValue:[NSString stringWithString:releaseDate] forKey:@"releaseDate"];
              }*/
             if ([fields containsObject: @"beatsPerMinute"]) {
@@ -371,7 +371,7 @@ RCT_EXPORT_METHOD(getTracks:(NSDictionary *)params successCallback:(RCTResponseS
             }
             /*if ([fields containsObject: @"playedDate"]) {
              NSString *playedDate = [song valueForProperty: MPMediaItemPropertyLastPlayedDate];
-             
+
              [songDictionary setValue:[NSString stringWithString:playedDate] forKey:@"playedDate"];
              }*/
             if ([fields containsObject: @"userGrouping"]) {
@@ -388,7 +388,7 @@ RCT_EXPORT_METHOD(getTracks:(NSDictionary *)params successCallback:(RCTResponseS
              }
              [songDictionary setValue:[NSNumber numberWithInt:bookmarkTime] forKey:@"bookmarkTime"];
              }*/
-            
+
             // Aliases
             if ([fields containsObject: @"playbackDuration"]) {
                 [songDictionary setValue:[duration isKindOfClass:[NSString class]] ? [NSNumber numberWithInt:[duration intValue]] : duration forKey:@"playbackDuration"];
@@ -396,17 +396,17 @@ RCT_EXPORT_METHOD(getTracks:(NSDictionary *)params successCallback:(RCTResponseS
         }
         [mutableSongsToSerialize addObject:songDictionary];
     }
-    
+
     successCallback(@[mutableSongsToSerialize]);
 }
 
 RCT_EXPORT_METHOD(getPlaylists:(NSDictionary *)params successCallback:(RCTResponseSenderBlock)successCallback) {
-    
+
     NSArray *fields = [RCTConvert NSArray:params[@"fields"]];
     NSDictionary *query = [RCTConvert NSDictionary:params[@"query"]];
-    
+
     MPMediaQuery *playlistsQuery = [MPMediaQuery playlistsQuery];
-    
+
     if ([query objectForKey:@"name"] != nil) {
         NSString *searchName = [query objectForKey:@"name"];
         [playlistsQuery addFilterPredicate:[MPMediaPropertyPredicate predicateWithValue:searchName forProperty:MPMediaPlaylistPropertyName comparisonType:MPMediaPredicateComparisonContains]];
@@ -416,11 +416,11 @@ RCT_EXPORT_METHOD(getPlaylists:(NSDictionary *)params successCallback:(RCTRespon
         NSNumber  *searchPersistentId = [NSNumber numberWithInteger: [persistentId integerValue]];
         [playlistsQuery addFilterPredicate:[MPMediaPropertyPredicate predicateWithValue:searchPersistentId forProperty:MPMediaPlaylistPropertyPersistentID comparisonType:MPMediaPredicateComparisonEqualTo]];
     }
-    
-    
+
+
     NSArray *playlists = [playlistsQuery collections];
     NSMutableArray *playlistsArray = [NSMutableArray array];
-    
+
     for (MPMediaPlaylist *playlist in playlists) {
         NSMutableArray *mutableSongsToSerialize = [NSMutableArray array];
         NSMutableDictionary *mutablePlaylistToSerialize = [NSMutableDictionary dictionary];
@@ -428,7 +428,7 @@ RCT_EXPORT_METHOD(getPlaylists:(NSDictionary *)params successCallback:(RCTRespon
         NSString *playlistName = [playlist valueForProperty: MPMediaPlaylistPropertyName];
         NSNumber *playlistId = [playlist valueForProperty: MPMediaPlaylistPropertyPersistentID];
         NSString *playlistPlayCount = [playlist valueForProperty: MPMediaItemPropertyPlayCount];
-        
+
         if (playlistName == nil) {
             playlistName = @"";
         }
@@ -438,7 +438,7 @@ RCT_EXPORT_METHOD(getPlaylists:(NSDictionary *)params successCallback:(RCTRespon
         if (playlistPlayCount == nil) {
             playlistPlayCount = @"0";
         }
-        
+
         if (fields == nil || [fields containsObject: @"tracks"]) {
             NSArray *songs = [playlist items];
             for (MPMediaItem *song in songs) {
@@ -446,14 +446,14 @@ RCT_EXPORT_METHOD(getPlaylists:(NSDictionary *)params successCallback:(RCTRespon
                 NSString *songTitle =
                 [song valueForProperty: MPMediaItemPropertyTitle];
                 // NSLog (@"\t\t%@", songTitle);
-                
+
                 NSString *title = [song valueForProperty: MPMediaItemPropertyTitle]; // filterable
                 NSString *albumTitle = [song valueForProperty: MPMediaItemPropertyAlbumTitle]; // filterable
                 NSString *albumArtist = [song valueForProperty: MPMediaItemPropertyAlbumArtist]; // filterable
                 NSString *genre = [song valueForProperty: MPMediaItemPropertyGenre]; // filterable
                 NSString *duration = [song valueForProperty: MPMediaItemPropertyPlaybackDuration];
                 NSString *playCount = [song valueForProperty: MPMediaItemPropertyPlayCount];
-                
+
                 if (title == nil) {
                     title = @"";
                 }
@@ -472,13 +472,13 @@ RCT_EXPORT_METHOD(getPlaylists:(NSDictionary *)params successCallback:(RCTRespon
                 if (playCount == nil) {
                     playCount = @"0";
                 }
-                
+
                 songDictionary = @{@"albumTitle":albumTitle, @"albumArtist": albumArtist, @"duration":[duration isKindOfClass:[NSString class]] ? [NSNumber numberWithInt:[duration intValue]] : duration, @"genre":genre, @"playCount": [NSNumber numberWithInt:[playCount intValue]], @"title": title};
-                
+
                 [mutableSongsToSerialize addObject:songDictionary];
             }
         }
-        
+
         if (fields == nil) {
             [mutablePlaylistToSerialize setValue: playlistName forKey: @"name"];
             [mutablePlaylistToSerialize setValue: [NSNumber numberWithInt:[playlistId intValue]] forKey: @"persistentId"];
@@ -498,7 +498,7 @@ RCT_EXPORT_METHOD(getPlaylists:(NSDictionary *)params successCallback:(RCTRespon
                 [mutablePlaylistToSerialize setValue: [NSNumber numberWithInt:[playlistPlayCount intValue]] forKey: @"playCount"];
             }
         }
-        
+
         [playlistsArray addObject: mutablePlaylistToSerialize];
     }
     successCallback(@[playlistsArray]);
@@ -506,28 +506,28 @@ RCT_EXPORT_METHOD(getPlaylists:(NSDictionary *)params successCallback:(RCTRespon
 
 RCT_EXPORT_METHOD(playTrack:(NSDictionary *)trackItem callback:(RCTResponseSenderBlock)callback) {
     NSLog(@"%@ %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-    
+
     // NSLog(@"trackItem %@", trackItem);
-    
+
     // NSNumber *persistentId = [RCTConvert NSNumber:trackItem[@"persistentId"]];
     NSString *searchTitle = [trackItem objectForKey:@"title"];
     NSString *searchAlbumTitle = [trackItem objectForKey:@"albumTitle"];
-    
+
     if (searchTitle != nil) {
-        
+
         MPMediaQuery *songQuery = [[MPMediaQuery alloc] init];
-        
-        
+
+
         [songQuery addFilterPredicate:[MPMediaPropertyPredicate predicateWithValue:searchTitle forProperty: MPMediaItemPropertyTitle comparisonType:MPMediaPredicateComparisonContains]];
         [songQuery addFilterPredicate:[MPMediaPropertyPredicate predicateWithValue:searchAlbumTitle forProperty:MPMediaItemPropertyAlbumTitle comparisonType:MPMediaPredicateComparisonContains]];
-        
+
         // NSLog(@"song query");
         if (songQuery.items.count > 0)
         {
             // NSLog(@"song exists! %@");
             [[MPMusicPlayerController applicationMusicPlayer] setQueueWithQuery: songQuery];
             [[MPMusicPlayerController applicationMusicPlayer] play];
-            
+
             callback(@[[NSNull null]]);
         } else {
             callback(@[@"Track has not been found"]);
@@ -539,21 +539,31 @@ RCT_EXPORT_METHOD(playTrack:(NSDictionary *)trackItem callback:(RCTResponseSende
 
 RCT_EXPORT_METHOD(play) {
     NSLog(@"%@ %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-    
+
     [[MPMusicPlayerController applicationMusicPlayer] play];
 }
 
 RCT_EXPORT_METHOD(pause) {
     NSLog(@"%@ %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-    
+
     [[MPMusicPlayerController applicationMusicPlayer] pause];
 }
 
-RCT_EXPORT_METHOD(getCurrentPlayTime:(NSDictionary *)params callback:(RCTResponseSenderBlock)callback)
+RCT_EXPORT_METHOD(getElapsPlayTime:(RCTResponseSenderBlock)callback)
 {
-    NSInteger sec = [[MPMusicPlayerController iPodMusicPlayer] currentPlaybackTime];
-    NSLog(@"%@ %d","RNiTunes.getCurrentPlayTime: time = ", sec)
-    callback(@[[NSNull null], sec]);
+    MPMusicPlayerController *musicPlayer = [MPMusicPlayerController systemMusicPlayer] ;
+    double nowPlayingItemDuration = [[[musicPlayer nowPlayingItem] valueForProperty:MPMediaItemPropertyPlaybackDuration]doubleValue];
+    double currentTime = (double) [musicPlayer currentPlaybackTime];
+    
+    NSLog(@"%@ %@ : nowPlayingItemDuration = %f  currentTime = %f",
+          NSStringFromClass([self class]),
+          NSStringFromSelector(_cmd),
+          nowPlayingItemDuration,
+          currentTime);
+    
+    NSNumber *number = [NSNumber numberWithInt:currentTime] ;
+    NSLog(@"%@ %@ : time number = %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), number);
+    callback(@[number]);
 }
 
 
@@ -562,7 +572,7 @@ RCT_EXPORT_METHOD(getCurrentPlayTime:(NSDictionary *)params callback:(RCTRespons
 - (NSString *)imageToNSString:(UIImage *)image
 {
     NSData *data = UIImagePNGRepresentation(image);
-    
+
     return [data base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
 }
 
