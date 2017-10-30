@@ -1,7 +1,3 @@
-/**
- * @providesModule react-native-itunes
- */
-
 var React = require('react-native');
 
 var {
@@ -52,8 +48,7 @@ module.exports = {
 
   playTrack: function(trackItem) {
     return new Promise((resolve, reject) => {
-      if (
-        !trackItem.hasOwnProperty('title') ||
+      if (!trackItem.hasOwnProperty('title') ||
         !trackItem.hasOwnProperty('albumTitle')) {
         reject('To play a track, you need to send the [title] and the [albumTtile] properties');
         return;
