@@ -454,6 +454,15 @@ RCT_EXPORT_METHOD(getPlaylists:(NSDictionary *)params successCallback:(RCTRespon
                 NSString *duration = [song valueForProperty: MPMediaItemPropertyPlaybackDuration];
                 NSString *playCount = [song valueForProperty: MPMediaItemPropertyPlayCount];
 
+                NSString *base64 = @"";
+                MPMediaItemArtwork *artwork = [song valueForProperty: MPMediaItemPropertyArtwork];
+                if (artwork != nil) {
+                    
+                    UIImage *image = [artwork imageWithSize:CGSizeMake(100, 100)];
+                    // http://www.12qw.ch/2014/12/tooltip-decoding-base64-images-with-chrome-data-url/
+                    // http://stackoverflow.com/a/510444/185771
+                    base64 = [NSString stringWithFormat:@"%@%@", @"data:image/jpeg;base64,", [self imageToNSString:image]];
+                }
                 if (title == nil) {
                     title = @"";
                 }
@@ -472,9 +481,10 @@ RCT_EXPORT_METHOD(getPlaylists:(NSDictionary *)params successCallback:(RCTRespon
                 if (playCount == nil) {
                     playCount = @"0";
                 }
+                
+                songDictionary = @{@"albumTitle":albumTitle, @"albumArtist": albumArtist, @"duration":[duration isKindOfClass:[NSString class]] ? [NSNumber numberWithInt:[duration intValue]] : duration, @"genre":genre, @"playCount": [NSNumber numberWithInt:[playCount intValue]], @"title": title, @"artwork":base64};
 
-                songDictionary = @{@"albumTitle":albumTitle, @"albumArtist": albumArtist, @"duration":[duration isKindOfClass:[NSString class]] ? [NSNumber numberWithInt:[duration intValue]] : duration, @"genre":genre, @"playCount": [NSNumber numberWithInt:[playCount intValue]], @"title": title};
-
+                
                 [mutableSongsToSerialize addObject:songDictionary];
             }
         }
@@ -567,6 +577,11 @@ RCT_EXPORT_METHOD(getElapsPlayTime:(RCTResponseSenderBlock)callback)
 }
 
 
+RCT_EXPORT_METHOD(seekTo:(double)seconds ) {
+    // double dSeconds = [seconds doubleValue];
+    MPMusicPlayerController *musicPlayer = [MPMusicPlayerController systemMusicPlayer] ;
+    musicPlayer.currentPlaybackTime = seconds ;
+}
 
 // http://stackoverflow.com/questions/22243854/encode-image-to-base64-get-a-invalid-base64-string-ios-using-base64encodedstri
 - (NSString *)imageToNSString:(UIImage *)image
