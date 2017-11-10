@@ -151,13 +151,11 @@ iTunes.getAlbums().then(albums => {
 ```
 
 
-# Get elapsed time of the currently currently playing track
+# Get current play time of the playing track
 ```js
 import iTunes from 'react-native-itunes';
 
 iTunes.getCurrentPlayTime()
-.then( (time) => console.log(time); )
-.catch(
-    err => console.error('time read failure ' + err)
-)
+.then(time => console.log(time))
+.catch(err => console.error('time read failure', err));
 ```

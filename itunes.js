@@ -39,8 +39,8 @@ module.exports = {
   },
   getCurrentPlayTime: function(params) {
     return new Promise((resolve) => {
-      RNiTunes.getElapsPlayTime((elapse) => {
-        resolve(elapse);
+      RNiTunes.getCurrentPlayTime((currentPlayTime) => {
+        resolve(currentPlayTime);
       });
     });
   },
@@ -68,5 +68,9 @@ module.exports = {
         }
       });
     });
+  },
+
+  seekTo: function(playingTime) {
+    RNiTunes.seekTo(playingTime);
   }
 };

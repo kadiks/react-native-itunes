@@ -6,7 +6,7 @@ Access your iTunes library (iOS only)
 
 ## [Example project](https://github.com/kadiks/rnitunesdemo)
 
-For RN older than 0.40.0, use the release 0.4.2 of this library
+For RN older than 0.40.0, use the release 0.4.2+ of this library
 
 ## Installation
 
@@ -157,6 +157,13 @@ Returns [TrackItem]
 
 ## Changelog
 
+### 0.4.5
+
+Thanks to [Haggai Shapira](https://github.com/Haggaish)
+
+- Get the current play time `getCurrentPlayTime()`
+- Seek to functionality `seekTo()`
+
 ### 0.4.4
 
 Thanks to [kurokky](https://github.com/kurokky)
@@ -171,7 +178,7 @@ Thanks to [kurokky](https://github.com/kurokky)
 
 ### 0.4.0
 
-- Get playlists
+- Get playlists 
 
 ### 0.3.1
 

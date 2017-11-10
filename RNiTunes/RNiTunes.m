@@ -454,15 +454,6 @@ RCT_EXPORT_METHOD(getPlaylists:(NSDictionary *)params successCallback:(RCTRespon
                 NSString *duration = [song valueForProperty: MPMediaItemPropertyPlaybackDuration];
                 NSString *playCount = [song valueForProperty: MPMediaItemPropertyPlayCount];
 
-                NSString *base64 = @"";
-                MPMediaItemArtwork *artwork = [song valueForProperty: MPMediaItemPropertyArtwork];
-                if (artwork != nil) {
-                    
-                    UIImage *image = [artwork imageWithSize:CGSizeMake(100, 100)];
-                    // http://www.12qw.ch/2014/12/tooltip-decoding-base64-images-with-chrome-data-url/
-                    // http://stackoverflow.com/a/510444/185771
-                    base64 = [NSString stringWithFormat:@"%@%@", @"data:image/jpeg;base64,", [self imageToNSString:image]];
-                }
                 if (title == nil) {
                     title = @"";
                 }
@@ -482,7 +473,7 @@ RCT_EXPORT_METHOD(getPlaylists:(NSDictionary *)params successCallback:(RCTRespon
                     playCount = @"0";
                 }
                 
-                songDictionary = @{@"albumTitle":albumTitle, @"albumArtist": albumArtist, @"duration":[duration isKindOfClass:[NSString class]] ? [NSNumber numberWithInt:[duration intValue]] : duration, @"genre":genre, @"playCount": [NSNumber numberWithInt:[playCount intValue]], @"title": title, @"artwork":base64};
+                songDictionary = @{@"albumTitle":albumTitle, @"albumArtist": albumArtist, @"duration":[duration isKindOfClass:[NSString class]] ? [NSNumber numberWithInt:[duration intValue]] : duration, @"genre":genre, @"playCount": [NSNumber numberWithInt:[playCount intValue]], @"title": title};
 
                 
                 [mutableSongsToSerialize addObject:songDictionary];
@@ -559,26 +550,19 @@ RCT_EXPORT_METHOD(pause) {
     [[MPMusicPlayerController applicationMusicPlayer] pause];
 }
 
-RCT_EXPORT_METHOD(getElapsPlayTime:(RCTResponseSenderBlock)callback)
-{
+RCT_EXPORT_METHOD(getCurrentPlayTime:(RCTResponseSenderBlock)callback) {
+    NSLog(@"%@ %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+
     MPMusicPlayerController *musicPlayer = [MPMusicPlayerController systemMusicPlayer] ;
     double nowPlayingItemDuration = [[[musicPlayer nowPlayingItem] valueForProperty:MPMediaItemPropertyPlaybackDuration]doubleValue];
     double currentTime = (double) [musicPlayer currentPlaybackTime];
     
-    NSLog(@"%@ %@ : nowPlayingItemDuration = %f  currentTime = %f",
-          NSStringFromClass([self class]),
-          NSStringFromSelector(_cmd),
-          nowPlayingItemDuration,
-          currentTime);
-    
     NSNumber *number = [NSNumber numberWithInt:currentTime] ;
-    NSLog(@"%@ %@ : time number = %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), number);
     callback(@[number]);
 }
 
 
-RCT_EXPORT_METHOD(seekTo:(double)seconds ) {
-    // double dSeconds = [seconds doubleValue];
+RCT_EXPORT_METHOD(seekTo:(double)seconds) {
     MPMusicPlayerController *musicPlayer = [MPMusicPlayerController systemMusicPlayer] ;
     musicPlayer.currentPlaybackTime = seconds ;
 }
