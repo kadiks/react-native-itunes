@@ -149,3 +149,15 @@ iTunes.getAlbums().then(albums => {
   console.log(albums); // [TrackItem] with 3 properties: albumTitle, albumArtist and artwork
 });
 ```
+
+
+# Get elapsed time of the currently currently playing track
+```js
+import iTunes from 'react-native-itunes';
+
+iTunes.getCurrentPlayTime()
+.then( (time) => console.log(time); )
+.catch(
+    err => console.error('time read failure ' + err)
+)
+```
