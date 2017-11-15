@@ -1,6 +1,7 @@
 # iTunes React Native
 
 [![npm version](https://badge.fury.io/js/react-native-itunes.svg)](https://badge.fury.io/js/react-native-itunes)
+[![npm dl](https://img.shields.io/npm/dw/react-native-itunes.svg)]
 
 Access your iTunes library (iOS only)
 
