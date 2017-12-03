@@ -1,6 +1,6 @@
 {
   "name": "react-native-itunes",
-  "version": "0.4.5",
+  "version": "0.5.0",
   "description": "Get iTunes info",
   "main": "itunes.js",
   "repository": {
