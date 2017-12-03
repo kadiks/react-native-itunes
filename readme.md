@@ -104,9 +104,13 @@ Returns [String] of artists
 
 Returns [TrackItem]
 
+### getCurrentPlayTime()
+
+`[DEPRECATED]` use `getCurrentTrack()` instead
 
 ### getCurrentTrack()
 
+Returns TrackItem with additional properties: currentPlayTime and artwork
 
 ### getPlaylists({ fields = [], query = {} })
 
@@ -144,6 +148,8 @@ Returns [TrackItem]
 ### pause()
 
 ### previous()
+
+### seekTo(seconds)
 
 ## PlaylistItem
 
