@@ -121,8 +121,6 @@ Returns [PlaylistItem]
 
 ### getTracks({ fields = [], query = {}, type: '' })
 
-### next()
-
 Returns [TrackItem]
 
 - fields: Array https://developer.apple.com/library/ios/documentation/MediaPlayer/Reference/MPMediaItem_ClassReference/
@@ -136,6 +134,8 @@ Returns [TrackItem]
   - default to `''` and will return songs
   - `audiobooks` will return the list of audiobooks
   - `podcasts` will return the list of podcasts
+
+### next()
 
 ### playTrack(Track)
 
