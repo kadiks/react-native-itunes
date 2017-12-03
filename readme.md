@@ -79,7 +79,7 @@ iTunes.getTracks({
     albumArtist: 'daft',
   },
 }).then((tracks) => {
-  iTunes.playTrack(tracks[0])
+  iTunes.playTracks(tracks)
     .then(res => {
       console.log('is playing');
     })
@@ -104,6 +104,10 @@ Returns [String] of artists
 
 Returns [TrackItem]
 
+
+### getCurrentTrack()
+
+
 ### getPlaylists({ fields = [], query = {} })
 
 Returns [PlaylistItem]
@@ -116,6 +120,8 @@ Returns [PlaylistItem]
   - name
 
 ### getTracks({ fields = [], query = {}, type: '' })
+
+### next()
 
 Returns [TrackItem]
 
@@ -133,7 +139,11 @@ Returns [TrackItem]
 
 ### playTrack(Track)
 
+### playTracks([Track])
+
 ### pause()
+
+### previous()
 
 ## PlaylistItem
 
@@ -157,6 +167,13 @@ Returns [TrackItem]
 	- If you need more info, check out those properties list and do not hesitate doing a pull request (PR) with your addition
 
 ## Changelog
+
+### 0.5.0
+
+- Play list of searched items `playTracks()`
+- Get current playing track `getCurrentTrack()`
+- Play next item in playlist `next()`
+- Play previous item in playlist `previous()`
 
 ### 0.4.5
 
@@ -208,14 +225,18 @@ Thanks to [kurokky](https://github.com/kurokky)
 - [ ] Remove default `artwork` property in `getAlbums()` to avoid performances issues
 - [ ] Change `getArtists()` to return [TrackItem] and not [String]
 - [ ] Add same filtering capabilities from `getTracks()` to `getAlbums()` & `getArtists()`
-- [ ] Remove playable capabilities all together (now with iOS11, it needs a new authorization process)
+- ~~Remove playable capabilities all together (now with iOS11, it needs a new authorization process)~~
 - [x] Change all code and examples to ES6
+- [ ] Change all code and examples to ES7 (async/await)
 - [x] Get playlist
 
 ### Player
 
-- [x] Play from searched items
+- [x] Play a searched item
 - [x] play()/pause()
+- [x] Play a list of searched items
+- [x] Play next item in playlist
+- [x] Play previous item in playlist
 
 ### getTracks(params)
 

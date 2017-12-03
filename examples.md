@@ -150,6 +150,15 @@ iTunes.getAlbums().then(albums => {
 });
 ```
 
+# Get current track (with playing time and artwork)
+
+```js
+import iTunes from 'react-native-itunes';
+
+iTunes.getCurrentTrack().then(track => {
+  console.log(track); // TrackItem with additional properties: artwork and currentPlayTime
+});
+```
 
 # Get current play time of the playing track
 ```js
