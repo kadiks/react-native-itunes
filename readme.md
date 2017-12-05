@@ -9,6 +9,8 @@ Access your iTunes library (iOS only)
 
 For RN older than 0.40.0, use the release 0.4.2+ of this library
 
+If you have questions, ask them on Twitter [@kadiks](https://twitter.com/kadiks)
+
 ## Installation
 
 In the command line, first you need to install react-native-itunes:

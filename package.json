@@ -1,7 +1,7 @@
 {
   "name": "react-native-itunes",
   "version": "0.5.0",
-  "description": "Get iTunes info",
+  "description": "Search and play Apple Music/iTunes tracks",
   "main": "itunes.js",
   "repository": {
     "type": "git",
