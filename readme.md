@@ -110,9 +110,27 @@ Returns [TrackItem]
 
 `[DEPRECATED]` use `getCurrentTrack()` instead
 
-### getCurrentTrack()
+### getCurrentTrack({ playerType = "application", includeArtwork = false })
 
-Returns TrackItem with additional properties: currentPlayTime and artwork
+Returns a Promise that resolves to an `TrackItem` with additional properties: `currentPlayTime` and `artwork` or `null` if there is no track played.
+
+The property playerType can be `application` or `system`.
+By setting the property `includeArtwork` to `false` you can save some memory resources.
+
+Sample Object:
+
+```js
+{
+  currentPlayTime: number,
+  genre: string,
+  playCount: number,
+  title: string,
+  albumTitle: string,
+  duration: number,
+  albumArtist: string,
+  artwork: string | null,
+}
+```
 
 ### getPlaylists({ fields = [], query = {} })
 

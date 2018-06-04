@@ -72,12 +72,30 @@ RCT_EXPORT_METHOD(getAlbums:(NSDictionary *)params successCallback:(RCTResponseS
     successCallback(@[mutableAlbumsToSerialize]);
 }
 
-RCT_EXPORT_METHOD(getCurrentTrack: (RCTResponseSenderBlock)successCallback) {
+RCT_EXPORT_METHOD(getCurrentTrack:(NSDictionary *)params successCallback:(RCTResponseSenderBlock)successCallback) {
     NSLog(@"%@ %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-    
-    MPMusicPlayerController *musicPlayer = [MPMusicPlayerController applicationMusicPlayer];
+  
+    NSString *playerType = [RCTConvert NSString:params[@"playerType"]];
+    BOOL includeArtwork = [RCTConvert BOOL:params[@"includeArtwork"]];
+  
+    MPMusicPlayerController *musicPlayer = nil;
+  
+    if ([playerType isEqualToString:@"system"]) {
+      musicPlayer = [MPMusicPlayerController systemMusicPlayer];
+    } else if ([playerType isEqualToString:@"application"]) {
+      musicPlayer = [MPMusicPlayerController applicationMusicPlayer];
+    } else {
+      successCallback(@[@"Invalid playerType provided.", [NSNull null]]);
+      return;
+    }
+  
     MPMediaItem *song = [musicPlayer nowPlayingItem];
-    
+  
+    if (song == nil) {
+      successCallback(@[[NSNull null], [NSNull null]]);
+      return;
+    }
+  
     NSString *title = [song valueForProperty: MPMediaItemPropertyTitle]; // filterable
     NSString *albumTitle = [song valueForProperty: MPMediaItemPropertyAlbumTitle]; // filterable
     NSString *albumArtist = [song valueForProperty: MPMediaItemPropertyAlbumArtist]; // filterable
@@ -87,7 +105,7 @@ RCT_EXPORT_METHOD(getCurrentTrack: (RCTResponseSenderBlock)successCallback) {
     NSString *base64 = @"";
     // http://stackoverflow.com/questions/25998621/mpmediaitemartwork-is-null-while-cover-is-available-in-itunes
     MPMediaItemArtwork *artwork = [song valueForProperty: MPMediaItemPropertyArtwork];
-    if (artwork != nil) {
+    if (artwork != nil && includeArtwork == true) {
         //NSLog(@"artwork %@", artwork);
         UIImage *image = [artwork imageWithSize:CGSizeMake(100, 100)];
         // http://www.12qw.ch/2014/12/tooltip-decoding-base64-images-with-chrome-data-url/
