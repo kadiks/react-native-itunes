@@ -102,7 +102,7 @@ Note: it works on the device (it even shows on the cloud Apple Music saved songs
 
 Returns [String] of artists
 
-### getAlbums()
+### getAlbums({ includeArtwork = false })
 
 Returns [TrackItem]
 
@@ -176,6 +176,10 @@ Returns [TrackItem]
 
 ## Changelog
 
+### 0.5.1
+
+- Specify whether to fetch album artwork `getAlbums()`
+
 ### 0.5.0
 
 - Play list of searched items `playTracks()`
@@ -204,7 +208,7 @@ Thanks to [kurokky](https://github.com/kurokky)
 
 ### 0.4.0
 
-- Get playlists 
+- Get playlists
 
 ### 0.3.1
 
@@ -230,7 +234,7 @@ Thanks to [kurokky](https://github.com/kurokky)
 - [ ] Add tests
 - [ ] Create a query builder function to be called from all public methods
 - [ ] Refactor #getTracks to always return TrackItem.title & TrackItem.albumTitle
-- [ ] Remove default `artwork` property in `getAlbums()` to avoid performances issues
+- [x] Remove default `artwork` property in `getAlbums()` to avoid performances issues
 - [ ] Change `getArtists()` to return [TrackItem] and not [String]
 - [ ] Add same filtering capabilities from `getTracks()` to `getAlbums()` & `getArtists()`
 - ~~Remove playable capabilities all together (now with iOS11, it needs a new authorization process)~~
