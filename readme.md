@@ -237,6 +237,7 @@ Thanks to [kurokky](https://github.com/kurokky)
 - [x] Change all code and examples to ES6
 - [ ] Change all code and examples to ES7 (async/await)
 - [x] Get playlist
+- [ ] Query tracks from Apple Music [#19](/../../issues/19) 
 
 ### Player
 
