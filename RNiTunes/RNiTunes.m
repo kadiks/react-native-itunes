@@ -149,6 +149,10 @@ RCT_EXPORT_METHOD(getTracks:(NSDictionary *)params successCallback:(RCTResponseS
         NSString *searchGenre = [query objectForKey:@"genre"];
         [songsQuery addFilterPredicate:[MPMediaPropertyPredicate predicateWithValue:searchGenre forProperty:MPMediaItemPropertyGenre comparisonType:MPMediaPredicateComparisonContains]];
     }
+    if ([query objectForKey:@"assetUrl"] != nil) {
+        NSString *searchAssetUrl = [query objectForKey:@"assetUrl"];
+        [songsQuery addFilterPredicate:[MPMediaPropertyPredicate predicateWithValue:searchAssetUrl forProperty:MPMediaItemPropertyAssetURL comparisonType:MPMediaPredicateComparisonContains]];
+    }
     if ([query objectForKey:@"persistentId"] != nil) {
         NSNumber *persistentId = [query objectForKey:@"persistentId"];
         NSNumber  *searchPersistentId = [NSNumber numberWithInteger: [persistentId integerValue]];
@@ -166,6 +170,8 @@ RCT_EXPORT_METHOD(getTracks:(NSDictionary *)params successCallback:(RCTResponseS
         NSString *genre = [song valueForProperty: MPMediaItemPropertyGenre]; // filterable
         NSString *duration = [song valueForProperty: MPMediaItemPropertyPlaybackDuration];
         NSString *playCount = [song valueForProperty: MPMediaItemPropertyPlayCount];
+        NSURL *url = [song valueForProperty: MPMediaItemPropertyAssetURL];
+        NSString *assetUrl = url.absoluteString;
 
         if (title == nil) {
             title = @"";
@@ -185,6 +191,9 @@ RCT_EXPORT_METHOD(getTracks:(NSDictionary *)params successCallback:(RCTResponseS
         if (playCount == nil) {
             playCount = @"0";
         }
+        if (assetUrl == nil) {
+            assetUrl = @"";
+        }
 
         //        NSString *test = @"1";
         //        int *testId = [test intValue];
@@ -196,7 +205,15 @@ RCT_EXPORT_METHOD(getTracks:(NSDictionary *)params successCallback:(RCTResponseS
         NSDictionary *songDictionary = [NSMutableDictionary dictionary];
 
         if (fields == nil) {
-            songDictionary = @{@"albumTitle":albumTitle, @"albumArtist": albumArtist, @"duration":[duration isKindOfClass:[NSString class]] ? [NSNumber numberWithInt:[duration intValue]] : duration, @"genre":genre, @"playCount": [NSNumber numberWithInt:[playCount intValue]], @"title": title};
+            songDictionary = @{
+              @"albumTitle": albumTitle,
+              @"albumArtist": albumArtist,
+              @"assetUrl": assetUrl,
+              @"duration": [duration isKindOfClass:[NSString class]] ? [NSNumber numberWithInt:[duration intValue]] : duration,
+              @"genre": genre,
+              @"playCount": [NSNumber numberWithInt:[playCount intValue]],
+              @"title": title
+            };
         } else {
             if ([fields containsObject: @"persistentId"]) {
                 NSString *persistentId = [song valueForProperty: MPMediaItemPropertyPersistentID];
