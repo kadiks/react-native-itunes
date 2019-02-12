@@ -162,8 +162,6 @@ RCT_EXPORT_METHOD(getTracks:(NSDictionary *)params successCallback:(RCTResponseS
     NSMutableArray *mutableSongsToSerialize = [NSMutableArray array];
 
     for (MPMediaItem *song in songsQuery.items) {
-
-        // filterable
         NSString *title = [song valueForProperty: MPMediaItemPropertyTitle]; // filterable
         NSString *albumTitle = [song valueForProperty: MPMediaItemPropertyAlbumTitle]; // filterable
         NSString *albumArtist = [song valueForProperty: MPMediaItemPropertyAlbumArtist]; // filterable
@@ -172,6 +170,8 @@ RCT_EXPORT_METHOD(getTracks:(NSDictionary *)params successCallback:(RCTResponseS
         NSString *playCount = [song valueForProperty: MPMediaItemPropertyPlayCount];
         NSURL *url = [song valueForProperty: MPMediaItemPropertyAssetURL];
         NSString *assetUrl = url.absoluteString;
+        MPMediaItemArtwork *artwork = [song valueForProperty: MPMediaItemPropertyArtwork];
+        NSString *artworkBase64 = @"";
 
         if (title == nil) {
             title = @"";
@@ -194,13 +194,12 @@ RCT_EXPORT_METHOD(getTracks:(NSDictionary *)params successCallback:(RCTResponseS
         if (assetUrl == nil) {
             assetUrl = @"";
         }
-
-        //        NSString *test = @"1";
-        //        int *testId = [test intValue];
-        //        Boolean testBool = [test intValue];
-        //        NSLog(@"testId %d", testId);
-        //        NSLog(@"testBool %d", testBool);
-
+        if (artwork == nil) {
+            artworkBase64 = @"";
+        } else {
+            UIImage *image = [artwork imageWithSize:CGSizeMake(480, 480)];
+            artworkBase64 = [NSString stringWithFormat:@"%@%@", @"data:image/jpeg;base64,", [self imageToNSString:image]];
+        }
 
         NSDictionary *songDictionary = [NSMutableDictionary dictionary];
 
@@ -209,6 +208,7 @@ RCT_EXPORT_METHOD(getTracks:(NSDictionary *)params successCallback:(RCTResponseS
               @"albumTitle": albumTitle,
               @"albumArtist": albumArtist,
               @"assetUrl": assetUrl,
+              @"artwork": artworkBase64,
               @"duration": [duration isKindOfClass:[NSString class]] ? [NSNumber numberWithInt:[duration intValue]] : duration,
               @"genre": genre,
               @"playCount": [NSNumber numberWithInt:[playCount intValue]],
