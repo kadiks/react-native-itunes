@@ -1,49 +1,50 @@
-var React = require("react-native");
+import React from "react";
+import { NativeModules } from "react-native";
 
-var { RNiTunes } = require("react-native").NativeModules;
+const { RNiTunes } = NativeModules;
 
-module.exports = {
-  getPlaylists: function(params) {
-    return new Promise(resolve => {
-      RNiTunes.getPlaylists(params || {}, playlists => {
+export default {
+  getPlaylists: function (params) {
+    return new Promise((resolve) => {
+      RNiTunes.getPlaylists(params || {}, (playlists) => {
         resolve(playlists);
       });
     });
   },
 
-  getTracks: function(params) {
-    return new Promise(resolve => {
-      RNiTunes.getTracks(params || {}, tracks => {
+  getTracks: function (params) {
+    return new Promise((resolve) => {
+      RNiTunes.getTracks(params || {}, (tracks) => {
         resolve(tracks);
       });
     });
   },
 
-  getArtists: function(params) {
-    return new Promise(resolve => {
-      RNiTunes.getArtists(params || {}, tracks => {
+  getArtists: function (params) {
+    return new Promise((resolve) => {
+      RNiTunes.getArtists(params || {}, (tracks) => {
         resolve(tracks);
       });
     });
   },
 
-  getAlbums: function(params) {
-    return new Promise(resolve => {
-      RNiTunes.getAlbums(params || {}, tracks => {
+  getAlbums: function (params) {
+    return new Promise((resolve) => {
+      RNiTunes.getAlbums(params || {}, (tracks) => {
         resolve(tracks);
       });
     });
   },
 
-  getCurrentPlayTime: function(params) {
-    return new Promise(resolve => {
-      RNiTunes.getCurrentPlayTime(currentPlayTime => {
+  getCurrentPlayTime: function (params) {
+    return new Promise((resolve) => {
+      RNiTunes.getCurrentPlayTime((currentPlayTime) => {
         resolve(currentPlayTime);
       });
     });
   },
 
-  getCurrentTrack: function() {
+  getCurrentTrack: function () {
     return new Promise((resolve, reject) => {
       RNiTunes.getCurrentTrack((err, track) => {
         if (!err) {
@@ -54,23 +55,23 @@ module.exports = {
     });
   },
 
-  pause: function() {
+  pause: function () {
     RNiTunes.pause();
   },
 
-  play: function() {
+  play: function () {
     RNiTunes.play();
   },
 
-  previous: function() {
+  previous: function () {
     RNiTunes.previous();
   },
 
-  next: function() {
+  next: function () {
     RNiTunes.next();
   },
 
-  playTrack: function(trackItem) {
+  playTrack: function (trackItem) {
     return new Promise((resolve, reject) => {
       if (
         !trackItem.hasOwnProperty("title") ||
@@ -81,7 +82,7 @@ module.exports = {
         );
         return;
       }
-      RNiTunes.playTrack(trackItem || {}, err => {
+      RNiTunes.playTrack(trackItem || {}, (err) => {
         if (!err) {
           resolve();
         } else {
@@ -91,21 +92,21 @@ module.exports = {
     });
   },
 
-  playTracks: function(trackItems) {
+  playTracks: function (trackItems) {
     return new Promise((resolve, reject) => {
       if (Array.isArray(trackItems) === false || trackItems.length === 0) {
         reject("No track item have been found");
         return;
       }
       const isValid = trackItems.every(
-        t => t.hasOwnProperty("title") && t.hasOwnProperty("albumTitle")
+        (t) => t.hasOwnProperty("title") && t.hasOwnProperty("albumTitle")
       );
       if (isValid === false) {
         reject(
           "All track items should have [title] and [albumTitle] properties"
         );
       }
-      RNiTunes.playTracks(trackItems || [], err => {
+      RNiTunes.playTracks(trackItems || [], (err) => {
         if (!err) {
           resolve();
         } else {
@@ -115,11 +116,11 @@ module.exports = {
     });
   },
 
-  seekTo: function(playingTime) {
+  seekTo: function (playingTime) {
     RNiTunes.seekTo(playingTime);
   },
 
-  stop: function() {
+  stop: function () {
     RNiTunes.stop();
-  }
+  },
 };
