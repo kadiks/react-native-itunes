@@ -11,6 +11,6 @@ Pod::Spec.new do |s|
   s.authors      = { "kadiks" => "" }
   s.source       = { :git => "https://github.com/kadiks/react-native-itunes.git", :tag => 'v#{version}'}
   s.source_files = 'RNiTunes/*.{h,m}'
-  s.platform     = :ios, "8.0"
+  s.platform     = :ios, "12.2"
   s.dependency 'React/Core'
 end
