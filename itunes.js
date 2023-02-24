@@ -2,6 +2,11 @@ var React = require("react-native");
 
 var { RNiTunes } = require("react-native").NativeModules;
 
+var defaultGetCurrentTrackOptions = {
+  playerType: "application",
+  includeArtwork: true,
+}
+
 module.exports = {
   getPlaylists: function(params) {
     return new Promise(resolve => {
@@ -43,13 +48,18 @@ module.exports = {
     });
   },
 
-  getCurrentTrack: function() {
+  getCurrentTrack: function(opts) {
     return new Promise((resolve, reject) => {
-      RNiTunes.getCurrentTrack((err, track) => {
+      const mergedOptions = Object.assign({}, defaultGetCurrentTrackOptions , opts);
+      RNiTunes.getCurrentTrack(mergedOptions, (err, track) => {
         if (!err) {
+          if (track && track.artwork === "") {
+            track.artwork = null
+          }
           resolve(track);
+        } else {
+          reject(err);
         }
-        reject(err);
       });
     });
   },
